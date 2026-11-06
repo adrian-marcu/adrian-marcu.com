@@ -1,5 +1,5 @@
 ---
-title: "🚀 My Journey into Building a SaaS Product: A Wild Ride"
+title: "My Journey into Building a SaaS Product: A Wild Ride"
 description: "Explore the journey of building a SaaS product with insights on choosing the right tech stack, navigating AWS, setting up CI/CD pipelines, and automating infrastructure with Terraform. A startup founder’s guide packed with lessons from real-world challenges."
 pubDate: 2024-12-25T17:11:21+03:00
 heroImage: ./Myjourney.webp

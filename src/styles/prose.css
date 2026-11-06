@@ -1,0 +1,95 @@
+/* Long-form typography for rendered Markdown (posts, case-study narratives). */
+.prose {
+	color: var(--ink-2);
+	font-size: var(--step-1);
+	line-height: 1.75;
+}
+.prose > * + * {
+	margin-top: 1.25em;
+}
+.prose h2,
+.prose h3,
+.prose h4 {
+	margin-top: 2.2em;
+	scroll-margin-top: 5rem;
+}
+.prose h2 {
+	font-size: var(--step-3);
+}
+.prose h3 {
+	font-size: var(--step-2);
+}
+.prose h4 {
+	font-size: var(--step-1);
+}
+.prose h2 + *,
+.prose h3 + *,
+.prose h4 + * {
+	margin-top: 0.75em;
+}
+.prose a {
+	color: var(--accent);
+	text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+}
+.prose a:hover {
+	text-decoration-color: currentColor;
+}
+.prose strong {
+	color: var(--ink);
+	font-weight: 600;
+}
+.prose ul,
+.prose ol {
+	padding-left: 1.25em;
+}
+.prose li + li {
+	margin-top: 0.5em;
+}
+.prose li::marker {
+	color: var(--muted);
+}
+.prose blockquote {
+	margin-inline: 0;
+	padding-left: 1.25em;
+	border-left: 2px solid var(--accent);
+	color: var(--muted);
+	font-style: italic;
+}
+.prose img {
+	width: 100%;
+	border-radius: var(--radius-m);
+	border: 1px solid var(--border);
+}
+.prose figure {
+	margin-inline: 0;
+}
+.prose :not(pre) > code {
+	padding: 0.15em 0.35em;
+	border-radius: 4px;
+	background: var(--code-bg);
+	color: var(--ink);
+}
+.prose pre {
+	padding: var(--space-4);
+	border: 1px solid var(--border);
+	border-radius: var(--radius-m);
+	overflow-x: auto;
+	font-size: 0.875rem;
+	line-height: 1.6;
+}
+.prose hr {
+	margin-block: 2.5em;
+}
+.prose table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	border-collapse: collapse;
+	font-size: 0.9375rem;
+}
+.prose th,
+.prose td {
+	padding: 0.5em 0.75em;
+	border-bottom: 1px solid var(--border);
+	text-align: left;
+}

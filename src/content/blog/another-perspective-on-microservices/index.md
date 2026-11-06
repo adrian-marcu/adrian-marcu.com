@@ -32,7 +32,7 @@ It might be tricky to debug and manage the system when there are several service
 3. **Price**: Compared to a monolithic design, microservices can be more **expensive** to install and **maintain**.
 This strategy can end up being more expensive than a monolithic design due to the expense of deploying and administering several services as well as the added complexity. 
 
-![Sandboxing Cycle](/images/Another-Perspective-On-Microservices/sandboxing_cycle.webp "Sandboxing Cycle")
+![Sandboxing Cycle](./sandboxing_cycle.webp "Sandboxing Cycle")
 
 While having experience with big enterprise software, both on microservice and monolithic, I always like to think from a startup perspective because startups have to take fast decisions and **iterate** at an alarming speed. Making the decision to use a microservice architecture in a startup context might be difficult.
 On the one hand, the benefits of increased development **speed**, **resilience**, and **scalability** might be highly alluring.

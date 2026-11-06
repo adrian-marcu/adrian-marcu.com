@@ -1,17 +1,111 @@
 ---
-import PostList from '../../components/PostList.astro';
-import Page from '../../layouts/Page.astro';
-import { getPosts } from '../../lib/posts';
+import FormattedDate from '../../components/FormattedDate.astro';
+import Base from '../../layouts/Base.astro';
+import { PAGES } from '../../lib/pages';
+import { getPosts, readingTime } from '../../lib/posts';
 
 const posts = await getPosts();
 ---
 
-<Page title="Posts | Adrian Marcu" description="All posts by Adrian Marcu.">
-	<h1>Posts</h1>
-	<PostList posts={posts} />
-</Page>
+<Base title={PAGES.posts.title} description={PAGES.posts.description} image="/og/posts.png">
+	<div class="container wrap">
+		<h1>My blog</h1>
+		<p class="lead">
+			Notes on software architecture, freelancing, building a SaaS and AI in development.{' '}
+			<a class="text-link" href="/rss.xml">Subscribe via RSS</a>.
+		</p>
+		<ul class="list" role="list">
+			{
+				posts.map((post) => (
+					<li class="item">
+						<p class="date">
+							<FormattedDate date={post.data.pubDate} />
+						</p>
+						<div>
+							<h2 class="title">
+								<a href={`/${post.id}/`}>{post.data.title}</a>
+							</h2>
+							<p class="desc">{post.data.description}</p>
+							<p class="time">
+								{readingTime(post.body)}
+								{post.data.draft && ' · draft'}
+							</p>
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</Base>
+
 <style>
-	h1 {
-		margin-top: 0;
+	.wrap {
+		padding-top: var(--space-8);
+	}
+	.lead {
+		margin-top: var(--space-4);
+	}
+	.list {
+		margin: var(--space-7) 0 0;
+		padding: 0;
+		list-style: none;
+		border-bottom: 1px solid var(--border);
+	}
+	.item {
+		position: relative;
+		display: grid;
+		grid-template-columns: 8.5rem 1fr;
+		gap: var(--space-2) var(--space-5);
+		padding-block: var(--space-5);
+		border-top: 1px solid var(--border);
+	}
+	.date,
+	.time {
+		color: var(--muted);
+		font-size: 0.875rem;
+		font-variant-numeric: tabular-nums;
+	}
+	.date {
+		padding-top: 0.25rem;
+	}
+	.title {
+		font-size: var(--step-1);
+		font-weight: 600;
+		line-height: 1.35;
+	}
+	.title a {
+		text-decoration: none;
+	}
+	.title a::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+	.title a:focus-visible {
+		outline: none;
+	}
+	.item:focus-within {
+		outline: 2px solid var(--accent);
+		outline-offset: 4px;
+		border-radius: 4px;
+	}
+	.item:hover .title a {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+	}
+	.desc {
+		margin-top: var(--space-2);
+		color: var(--ink-2);
+	}
+	.time {
+		margin-top: var(--space-2);
+	}
+	@media (max-width: 600px) {
+		.item {
+			grid-template-columns: 1fr;
+		}
+		.date {
+			padding: 0;
+		}
 	}
 </style>

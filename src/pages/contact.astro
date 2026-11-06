@@ -1,156 +1,185 @@
 ---
-import Page from '../layouts/Page.astro';
+import Icon from '../components/Icon.astro';
+import { PROFILE, SOCIAL_LINKS } from '../consts';
+import Base from '../layouts/Base.astro';
+import { PAGES } from '../lib/pages';
 ---
 
-<Page title="Contact me | Adrian Marcu" description="Contact Adrian Marcu Freelance Senior Software Engineer">
-	<h1>Ready to collaborate and bring ideas to life?</h1>
-	<h5>
-		Hit me up! Whether it's brainstorming projects, swapping fresh concepts, or just linking up to
-		grow our circle, I'm game.
-	</h5>
+<Base title={PAGES.contact.title} description={PAGES.contact.description} image="/og/contact.png">
+	<div class="container wrap">
+		<header class="head">
+			<h1>Ready to collaborate and bring ideas to life?</h1>
+			<p class="lead">
+				Hit me up! Whether it's a contract role, brainstorming a project or just linking up to grow our
+				circle, I'm game.
+			</p>
+		</header>
 
-	<!-- forms.un-static.com redirects to /messagesent/ after a successful submission. -->
-	<div class="contact">
-  <form method="post" action="https://forms.un-static.com/forms/3eec99387bf56de24adf7f477d51be677ceea5cd">
-    <div class="form-group">
-      <p class="label"><span class="fa fa-user"></span>Name</p>
-      <input id="name" name="name" placeholder="Your name" type="text" required class="form-control">
-    </div>
-    <div class="form-group">
-      <p class="label"><span class="fa fa-envelope"></span>Email</p>
-      <input id="email" name="email" placeholder="Your email" type="text" required class="form-control">
-    </div>
-    <div class="form-group">
-      <p class="label"><span class="fa fa-message"></span>Message</p>
-      <textarea id="message" name="message" placeholder="Your message" required class="form-control"></textarea>
-    </div>
-    <div class="form-group">
-      <button class="button" name="submit" type="submit">Send</button>
-    </div>
-  </form>
+		<div class="grid">
+			<!-- forms.un-static.com redirects to /messagesent/ after a successful submission. -->
+			<form
+				class="form"
+				method="post"
+				action="https://forms.un-static.com/forms/3eec99387bf56de24adf7f477d51be677ceea5cd"
+				aria-labelledby="form-heading"
+			>
+				<h2 id="form-heading">Send a message</h2>
+				<div class="field">
+					<label for="name">Name</label>
+					<input id="name" name="name" type="text" autocomplete="name" required />
+				</div>
+				<div class="field">
+					<label for="email">Email</label>
+					<input id="email" name="email" type="email" autocomplete="email" required />
+				</div>
+				<div class="field">
+					<label for="message">Message</label>
+					<textarea id="message" name="message" rows="6" required aria-describedby="message-hint"></textarea>
+					<p id="message-hint" class="hint">A few lines on the project, team and timeline help me reply faster.</p>
+				</div>
+				<button class="btn btn-primary" type="submit">Send message <Icon name="arrow" /></button>
+			</form>
 
-  <div class="or-divider">
-    <span>OR</span>
-  </div>
-
-  <div class="calendar-container">
-    <!-- Google Calendar Appointment Scheduling begin -->
-    <link is:inline href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
-    <script is:inline src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-    <script is:inline>
-    (function() {
-      var target = document.currentScript;
-      window.addEventListener('load', function() {
-        calendar.schedulingButton.load({
-          url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2ZGN-5lZU8L0Mff1MyHqT7sv4M6jFdlRtvAXAdFQUXJXJDH7A2m1rsNRIX6m1N4DFbVzk6UuUl?gv=true',
-          color: '#1e1e1e',
-          label: 'Book an appointment',
-          target,
-        });
-      });
-    })();
-    </script>
-    <!-- end Google Calendar Appointment Scheduling -->
-  </div>
+			<aside class="other" aria-labelledby="other-heading">
+				<h2 id="other-heading">Other ways to reach me</h2>
+				<ul role="list">
+					<li>
+						<a href={SOCIAL_LINKS.booking} target="_blank" rel="noopener">
+							<Icon name="calendar" size={18} />
+							<span><strong>Book a call</strong><span>Pick a slot in my calendar</span></span>
+						</a>
+					</li>
+					<li>
+						<a href={`mailto:${PROFILE.email}`}>
+							<Icon name="mail" size={18} />
+							<span><strong>Email</strong><span>{PROFILE.email}</span></span>
+						</a>
+					</li>
+					<li>
+						<a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener">
+							<Icon name="linkedin" size={18} />
+							<span><strong>LinkedIn</strong><span>linkedin.com/in/adrianmarcu-tech</span></span>
+						</a>
+					</li>
+					<li>
+						<a href={PROFILE.resume} download>
+							<Icon name="download" size={18} />
+							<span><strong>Download resume</strong><span>PDF, 3 pages</span></span>
+						</a>
+					</li>
+				</ul>
+			</aside>
+		</div>
 	</div>
-</Page>
+</Base>
+
 <style>
-  .contact {
-    padding: 2.5rem; /* Consistent padding on all sides */
-    max-width: 480px;
-    margin: 2rem auto; /* Centered with equal top/bottom spacing */
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background: #f7f7f7;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    box-sizing: border-box; /* Ensures padding doesn't push width */
-  }
-
-  .form-group {
-    margin-bottom: 2rem;
-  }
-
-  .label {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1e1e1e;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    display: block; /* Ensures full-width alignment */
-  }
-
-  .form-control {
-    width: 100%;
-    padding: 0.9rem 1rem;
-    font-size: 1rem;
-    color: #1e1e1e;
-    background: #fff;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
-    box-sizing: border-box; /* Keeps padding within width */
-  }
-
-  .form-control:focus {
-    border-color: #4a4a4a;
-    outline: none;
-  }
-
-  textarea.form-control {
-    resize: vertical;
-    min-height: 110px;
-  }
-
-  .button {
-    background: #1e1e1e;
-    color: #fff;
-    padding: 0.9rem 2.5rem;
-    border: none;
-    border-radius: 6px;
-    font-size: 1rem;
-    font-weight: 500;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    transition: background 0.2s ease;
-    display: block; /* Ensures button aligns properly */
-    margin: 0 auto; /* Centers the button */
-  }
-
-  .button:hover {
-    background: #333333;
-  }
-
-  span {
-    margin-right: 0.5rem;
-    color: #4a4a4a;
-  }
-  
-  .or-divider {
-    text-align: center;
-    margin: 2.5rem 0;
-    position: relative;
-  }
-  
-  .or-divider::before, .or-divider::after {
-    content: "";
-    display: inline-block;
-    width: 40%;
-    height: 1px;
-    background: #e0e0e0;
-    vertical-align: middle;
-  }
-  
-  .or-divider span {
-    padding: 0 15px;
-    font-weight: 600;
-    color: #777;
-  }
-  
-  .calendar-container {
-    text-align: center;
-    margin: 1.5rem 0;
-  }
-
+	.wrap {
+		padding-block: clamp(var(--space-7), 7vw, var(--space-9)) var(--space-8);
+	}
+	.head h1 {
+		max-width: 16ch;
+		font-size: var(--step-4);
+	}
+	.head .lead {
+		margin-top: var(--space-5);
+	}
+	.grid {
+		display: grid;
+		gap: var(--space-6);
+		margin-top: var(--space-7);
+	}
+	h2 {
+		font-size: var(--step-1);
+		margin-bottom: var(--space-5);
+	}
+	.form {
+		display: grid;
+		gap: var(--space-5);
+		padding: clamp(var(--space-5), 4vw, var(--space-6));
+		border: 1px solid var(--border);
+		border-radius: var(--radius-m);
+		background: var(--surface);
+	}
+	.form h2 {
+		margin: 0;
+	}
+	.field {
+		display: grid;
+		gap: var(--space-2);
+	}
+	label {
+		color: var(--ink);
+		font-size: 0.9375rem;
+		font-weight: 500;
+	}
+	input,
+	textarea {
+		width: 100%;
+		min-height: 44px;
+		padding: 0.625rem 0.75rem;
+		border: 1px solid var(--field-border);
+		border-radius: var(--radius-s);
+		background: var(--bg);
+		color: var(--ink);
+		font: inherit;
+		font-size: 1rem;
+	}
+	textarea {
+		resize: vertical;
+	}
+	input:focus-visible,
+	textarea:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 1px;
+		border-color: transparent;
+	}
+	.hint {
+		color: var(--muted);
+		font-size: var(--step--1);
+	}
+	.form .btn {
+		justify-self: start;
+	}
+	.other ul {
+		display: grid;
+		gap: var(--space-2);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.other a {
+		display: flex;
+		gap: var(--space-4);
+		align-items: flex-start;
+		padding: var(--space-4);
+		border: 1px solid var(--border);
+		border-radius: var(--radius-m);
+		background: var(--surface);
+		color: var(--muted);
+		text-decoration: none;
+	}
+	.other a:hover {
+		border-color: var(--border-strong);
+		color: var(--ink);
+	}
+	.other a > :global(svg) {
+		margin-top: 0.2rem;
+		color: var(--accent);
+	}
+	.other a > span {
+		display: grid;
+		min-width: 0;
+		overflow-wrap: anywhere;
+		font-size: 0.9375rem;
+	}
+	.other strong {
+		color: var(--ink);
+		font-weight: 600;
+	}
+	@media (min-width: 900px) {
+		.grid {
+			grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+		}
+	}
 </style>

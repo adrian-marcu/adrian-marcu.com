@@ -13,7 +13,7 @@ As you can see the solution of this is to take a step back. Cut the excitement, 
 "*A complex system that works is invariably found to have evolved from a simple system that worked*" according to John Gall's law, which bears his name.
 This idea is relevant to software engineering, especially when it comes to designing and prototyping intricate systems.
 
-![Gall's Law](/images/System-Overdesign/gallslaw.webp "Gall's Law")
+![Gall's Law](./gallslaw.webp "Gall's Law")
 
 It can be tempting to try to address every issue and foresee every requirement when designing a complicated system.
 This strategy, though, might result in overengineering and a system that is difficult to comprehend and maintain.
@@ -36,7 +36,7 @@ When the car was tested on actual roads, this caused a number of problems.
 For instance, the car's sensors had trouble spotting certain things, like bicycles, and the navigation system had trouble navigating in certain weather conditions, like snow or heavy rain.
 These problems weren't identified until the car was tested on actual roads, which added time and money to the development process. 
 
-![Google Waymo car](/images/System-Overdesign/gc.webp "Google Waymo car")
+![Google Waymo car](./gc.webp "Google Waymo car")
 
 The 2013 introduction of the healthcare.gov website serves as another example of how complicated systems shouldn't be prototypically tested before being put into use.
 A group of contractors created the website as a component of the Affordable Care Act, often known as Obamacare.

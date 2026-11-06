@@ -1,58 +1,166 @@
 ---
-import { SITE_TITLE } from '../consts';
-import HeaderLink from './HeaderLink.astro';
-import SocialLinks from './SocialLinks.astro';
+import Icon from './Icon.astro';
+
+const links = [
+	{ href: '/', label: 'Home' },
+	{ href: '/about/', label: 'About' },
+	{ href: '/posts/', label: 'My blog' },
+	{ href: '/contact/', label: 'Contact' },
+];
+
+const path = Astro.url.pathname;
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
 ---
 
-<header>
-	<nav>
-		<h2>
-			<a href="/">{SITE_TITLE}</a>
-		</h2>
-		<div class="internal-links">
-			<HeaderLink href="/">Home</HeaderLink>
-			<HeaderLink href="/posts/">Posts</HeaderLink>
-			<HeaderLink href="/about/">About</HeaderLink>
-			<HeaderLink href="/contact/">Contact</HeaderLink>
-		</div>
-		<div class="header-social">
-			<SocialLinks />
-		</div>
-	</nav>
+<a class="skip-link" href="#main">Skip to content</a>
+<header class="site-header">
+	<div class="pill glass">
+		<nav aria-label="Main">
+			<ul>
+				{
+					links.map(({ href, label }) => (
+						<li>
+							<a href={href} aria-current={isCurrent(href) ? 'page' : undefined}>
+								{label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+		<span class="divider" aria-hidden="true"></span>
+		<button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+			<span class="icon-sun"><Icon name="sun" size={18} /></span>
+			<span class="icon-moon"><Icon name="moon" size={18} /></span>
+		</button>
+	</div>
 </header>
-<style>
-	header {
-		margin: 0;
-		padding: 0 1em;
-		background: white;
-		box-shadow: 0 2px 8px rgba(var(--black), 5%);
-	}
-	h2 {
-		margin: 0;
-		font-size: 1em;
-	}
 
-	h2 a,
-	h2 a.active {
+<script is:inline>
+	document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+		const root = document.documentElement;
+		const dark = root.dataset.theme
+			? root.dataset.theme === 'dark'
+			: matchMedia('(prefers-color-scheme: dark)').matches;
+		const next = dark ? 'light' : 'dark';
+		root.dataset.theme = next;
+		try {
+			localStorage.setItem('theme', next);
+		} catch {}
+	});
+</script>
+
+<style>
+	.skip-link {
+		position: absolute;
+		left: var(--space-4);
+		top: calc(-1 * var(--space-8));
+		z-index: 100;
+		padding: var(--space-2) var(--space-4);
+		border-radius: var(--radius-s);
+		background: var(--btn-bg);
+		color: var(--btn-ink);
+		font-weight: 500;
 		text-decoration: none;
 	}
-	nav {
+	.skip-link:focus {
+		top: calc(env(safe-area-inset-top, 0px) + var(--space-3));
+	}
+	/* A floating frosted-glass pill that stays at the top while the page scrolls underneath it. */
+	.site-header {
+		position: sticky;
+		top: calc(env(safe-area-inset-top, 0px) + 12px);
+		z-index: 50;
+		display: flex;
+		justify-content: center;
+		padding: calc(env(safe-area-inset-top, 0px) + 12px) var(--gutter) 0;
+		margin-top: calc(-1 * env(safe-area-inset-top, 0px));
+		pointer-events: none;
+	}
+	.pill {
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		gap: var(--space-1);
+		max-width: 100%;
+		padding: 5px;
+		border-radius: 999px;
+		pointer-events: auto;
+	}
+	nav ul {
+		display: flex;
+		gap: 2px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 	nav a {
-		padding: 1em 0.5em;
-		color: var(--black);
-		border-bottom: 4px solid transparent;
+		display: inline-flex;
+		align-items: center;
+		min-height: 40px;
+		padding: 0 var(--space-4);
+		border-radius: 999px;
+		color: var(--muted);
+		font-size: 0.9375rem;
+		font-weight: 500;
+		white-space: nowrap;
 		text-decoration: none;
 	}
-	nav a.active {
-		text-decoration: none;
-		border-bottom-color: var(--accent);
+	nav a:hover {
+		color: var(--ink);
 	}
-	@media (max-width: 720px) {
-		.header-social {
+	nav a[aria-current='page'] {
+		color: var(--ink);
+		background: var(--glass-active);
+	}
+	.divider {
+		width: 1px;
+		height: 20px;
+		margin-inline: 2px;
+		background: var(--glass-border);
+	}
+	.theme-toggle {
+		display: grid;
+		place-items: center;
+		flex-shrink: 0;
+		width: 40px;
+		height: 40px;
+		border: 0;
+		border-radius: 50%;
+		background: transparent;
+		color: var(--muted);
+		cursor: pointer;
+	}
+	.theme-toggle:hover {
+		color: var(--ink);
+		background: var(--glass-active);
+	}
+	.icon-moon {
+		display: none;
+	}
+	:global(:root[data-theme='dark']) .icon-moon {
+		display: block;
+	}
+	:global(:root[data-theme='dark']) .icon-sun {
+		display: none;
+	}
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .icon-moon {
+			display: block;
+		}
+		:global(:root:not([data-theme='light'])) .icon-sun {
+			display: none;
+		}
+	}
+	@media (max-width: 420px) {
+		.pill {
+			gap: 0;
+			padding: 4px;
+		}
+		nav a {
+			padding: 0 0.6rem;
+			font-size: 0.875rem;
+		}
+		.divider {
 			display: none;
 		}
 	}

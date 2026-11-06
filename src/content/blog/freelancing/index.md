@@ -11,7 +11,7 @@ Are you a software developer considering freelancing or an established freelance
 Whatever your circumstance, it can be challenging to keep up with the most recent trends and best practices in the world of freelancing as a software developer because it is continuously changing.
 We'll look at some of the crucial factors for becoming and continuing to be a successful freelance software developer in my first blog post.
 
-### The change
+## The change
 
 It can be difficult for a senior developer to transition from working for a corporation to freelancing.
 However, the freedom and **adaptability** of freelancing can be a significant lure for many engineers.
@@ -21,7 +21,7 @@ I was involved in multiple projects and gained alot of **experience**. This is a
 You can develop a variety of skills and experiences by working on various projects, as well as learn from various teams and stakeholders.
 Additionally, staying current with emerging technology and trends will help you maintain your **competitive edge** and adjust to shifting market conditions. 
 
-### Experience
+## Experience
 
 It's crucial to have a thorough understanding of the technologies and programming languages that are in demand first and foremost.
 The technology sector is continuously evolving, so keeping abreast of new innovations may keep you competitive and draw in new customers. 
@@ -32,9 +32,9 @@ The significance of creating a **strong online presence** should be taken into a
 This entails having a respectable website, a regularly updated blog, and a lively online presence on social media and business networking websites.
 This will enable you to reach a larger audience and present your qualifications to potential customers.
 
-![Work from home space](/images/Freelancing/Workspace.webp "Work from home space")
+![Work from home space](./Workspace.webp "Work from home space")
 
-### Being prone to entrepreneurship
+## Being prone to entrepreneurship
 
 Furthermore, it's important to understand the **business side** of freelancing well.
 This involves knowing how to efficiently handle your funds, negotiate with clients, and price your services.

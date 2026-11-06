@@ -1,11 +1,186 @@
 ---
-import { getEntry, render } from 'astro:content';
-import Page from '../layouts/Page.astro';
+import { Image } from 'astro:assets';
+import avatar from '../assets/photos/portrait.png';
+import Icon from '../components/Icon.astro';
+import { INTRO, PROFILE, SKILLS, SOCIAL_LINKS, WORKED_WITH } from '../consts';
+import Base from '../layouts/Base.astro';
+import { PAGES } from '../lib/pages';
 
-const about = (await getEntry('pages', 'about'))!;
-const { Content } = await render(about);
+// From the previous About page, in Adrian's own words.
+const focus = [
+	'Increasing software delivery and prototyping speed',
+	'Using data to make better decisions',
+	'Improving the resiliency and reliability of software',
+	'Saving hundreds of hours of engineering time through effective problem-solving and creative solutions',
+	'Mentoring teams and engineering leaders to set up engineering organizations for success',
+	'Strong communication and collaboration skills, able to work effectively with both technical and non-technical stakeholders',
+	'Quickly understanding complex systems and identifying opportunities for improvement',
+];
 ---
 
-<Page title={`${about.data.title} | Adrian Marcu`} description={about.data.description}>
-	<Content />
-</Page>
+<Base title={PAGES.about.title} description={PAGES.about.description} image="/og/about.png" type="profile">
+	<header class="container intro">
+		<div>
+			<h1>About me</h1>
+			<p class="lead">{INTRO}</p>
+			<p class="summary">{PROFILE.summary}</p>
+			<div class="actions">
+				<a class="btn btn-secondary" href={PROFILE.resume} download>
+					Resume <Icon name="file" /><span class="sr-only">(PDF)</span>
+				</a>
+				<a class="btn btn-secondary" href={SOCIAL_LINKS.booking} target="_blank" rel="noopener">
+					<Icon name="calendar" /> Book an appointment
+				</a>
+			</div>
+		</div>
+		<Image
+			src={avatar}
+			alt="Portrait of Adrian Marcu"
+			widths={[200, 400]}
+			sizes="200px"
+			loading="eager"
+			class="portrait"
+		/>
+	</header>
+
+	<div class="container sections">
+		<section aria-labelledby="focus-heading">
+			<h2 id="focus-heading" class="rule-label">What I bring</h2>
+			<ul class="checks">
+				{focus.map((item) => <li>{item}</li>)}
+			</ul>
+		</section>
+
+		<section aria-labelledby="skills-heading">
+			<h2 id="skills-heading" class="rule-label">Skills</h2>
+			<dl class="skills">
+				{
+					SKILLS.map(({ group, items }) => (
+						<div>
+							<dt>{group}</dt>
+							<dd>{items.join(', ')}</dd>
+						</div>
+					))
+				}
+			</dl>
+		</section>
+
+		<section aria-labelledby="clients-heading">
+			<h2 id="clients-heading" class="rule-label">Companies and clients</h2>
+			<ul class="clients" role="list">
+				{WORKED_WITH.map((name) => <li>{name}</li>)}
+			</ul>
+			<p class="more">
+				Full work history and education are on the <a class="text-link" href="/">home page</a>.
+			</p>
+		</section>
+	</div>
+</Base>
+
+<style>
+	.intro {
+		display: grid;
+		gap: var(--space-6);
+		padding-block: var(--space-8) var(--space-8);
+	}
+	.intro .lead {
+		margin-top: var(--space-5);
+	}
+	.summary {
+		max-width: var(--measure);
+		margin-top: var(--space-4);
+		color: var(--muted);
+	}
+	.actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-3);
+		margin-top: var(--space-6);
+	}
+	.portrait {
+		grid-row: 1;
+		width: 140px;
+		aspect-ratio: 1;
+		object-fit: cover;
+		object-position: 50% 25%;
+		border-radius: 50%;
+		border: 1px solid var(--border);
+	}
+	.sections {
+		display: grid;
+		gap: var(--space-8);
+	}
+	.checks {
+		display: grid;
+		gap: var(--space-3);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.checks li {
+		position: relative;
+		padding-left: 1.75rem;
+	}
+	.checks li::before {
+		content: '';
+		position: absolute;
+		left: 0.15rem;
+		top: 0.5em;
+		width: 0.7rem;
+		height: 0.4rem;
+		border-left: 2px solid var(--ink);
+		border-bottom: 2px solid var(--ink);
+		transform: rotate(-45deg);
+	}
+	.skills {
+		display: grid;
+		gap: var(--space-4);
+		margin: 0;
+	}
+	.skills div {
+		display: grid;
+		grid-template-columns: 13rem 1fr;
+		gap: var(--space-1) var(--space-5);
+	}
+	.skills dt {
+		color: var(--ink);
+		font-weight: 600;
+	}
+	.skills dd {
+		margin: 0;
+	}
+	.clients {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-2);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.clients li {
+		padding: var(--space-1) var(--space-3);
+		border: 1px solid var(--border);
+		border-radius: 999px;
+		color: var(--ink);
+		font-weight: 500;
+	}
+	.more {
+		margin-top: var(--space-5);
+		color: var(--muted);
+	}
+	@media (max-width: 640px) {
+		.skills div {
+			grid-template-columns: 1fr;
+		}
+	}
+	@media (min-width: 760px) {
+		.intro {
+			grid-template-columns: minmax(0, 1fr) auto;
+			align-items: start;
+		}
+		.portrait {
+			grid-row: auto;
+			width: 200px;
+		}
+	}
+</style>

@@ -1,0 +1,49 @@
+---
+import Base from '../layouts/Base.astro';
+import { getPosts } from '../lib/posts';
+
+const posts = (await getPosts()).slice(0, 3);
+---
+
+<Base title="Page not found · Adrian Marcu" description="This page doesn't exist." image="/og/home.png" noindex>
+	<div class="container wrap">
+		<p class="code serif">404</p>
+		<h1>This page doesn't exist.</h1>
+		<p class="lead">The link may be old or mistyped. These might be what you were after:</p>
+		<ul role="list">
+			<li><a href="/">Home</a></li>
+			<li><a href="/about/">About me</a></li>
+			{posts.map((post) => <li><a href={`/${post.id}/`}>{post.data.title}</a></li>)}
+			<li><a href="/contact/">Contact</a></li>
+		</ul>
+	</div>
+</Base>
+
+<style>
+	.wrap {
+		padding-block: var(--space-9);
+	}
+	.code {
+		color: var(--accent);
+		font-size: var(--step-3);
+		font-style: italic;
+	}
+	h1 {
+		margin-top: var(--space-2);
+		font-size: var(--step-4);
+	}
+	.lead {
+		margin-top: var(--space-5);
+	}
+	ul {
+		display: grid;
+		gap: var(--space-2);
+		margin: var(--space-6) 0 0;
+		padding: 0;
+		list-style: none;
+	}
+	a {
+		color: var(--accent);
+		font-weight: 500;
+	}
+</style>

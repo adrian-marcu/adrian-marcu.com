@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  # Daily rebuild so posts with a future pubDate go live on their date.
+  schedule:
+    - cron: '0 6 * * *'
 
 permissions:
   contents: read

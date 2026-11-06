@@ -1,9 +1,31 @@
 ---
-import Page from '../layouts/Page.astro';
+import Base from '../layouts/Base.astro';
 ---
 
 <!-- The contact form service redirects here after a successful submission. -->
-<Page title="Message sent | Adrian Marcu" description="Thanks for getting in touch.">
-	<h1>Thanks, your message was sent!</h1>
-	<p>I'll get back to you as soon as I can. <a href="/">Back to the homepage</a>.</p>
-</Page>
+<Base
+	title="Message sent · Adrian Marcu"
+	description="Thanks for getting in touch with Adrian Marcu."
+	image="/og/contact.png"
+	noindex
+>
+	<div class="container wrap">
+		<h1>Thanks, your message is on its way.</h1>
+		<p class="lead">I'll get back to you as soon as I can.</p>
+		<p class="links"><a class="btn btn-secondary" href="/">Back to the homepage</a></p>
+	</div>
+</Base>
+
+<style>
+	.wrap {
+		padding-block: var(--space-9);
+	}
+	h1 {
+		max-width: 18ch;
+		font-size: var(--step-4);
+	}
+	.lead,
+	.links {
+		margin-top: var(--space-5);
+	}
+</style>

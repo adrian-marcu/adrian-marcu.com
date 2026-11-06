@@ -1,0 +1,185 @@
+---
+import { Image } from 'astro:assets';
+import columns from '../assets/photos/columns.jpg';
+import portrait from '../assets/photos/portrait.png';
+
+// The hero photo stack. Drag the top photo left or right (or use the "Next photo" button) and it goes
+// to the back. The two photos right behind the top one peek out to the right and left; any further photos
+// wait hidden behind the top one until their turn comes. To add a photo, put it in src/assets/photos/
+// and add it here; the first one is on top when the page loads.
+const photos = [
+	{ src: portrait, alt: 'Portrait of Adrian Marcu', position: '50% 30%' },
+	{ src: columns, alt: 'Adrian Marcu in a navy blazer, arms crossed, in front of stone columns', position: '50% 25%' },
+];
+---
+
+<div class="stack" data-stack>
+	{
+		photos.map((photo, i) => (
+			<div class="card" data-pos={Math.min(i, 3)} style={`z-index: ${photos.length - i}`}>
+				<Image
+					src={photo.src}
+					alt={photo.alt}
+					widths={[240, 480]}
+					sizes="(min-width: 760px) 240px, 200px"
+					loading="eager"
+					fetchpriority={i === 0 ? 'high' : 'low'}
+					draggable="false"
+					style={`object-position: ${photo.position}`}
+				/>
+			</div>
+		))
+	}
+	{
+		photos.length > 1 && (
+			<button type="button" class="next glass" data-next hidden>
+				Next photo
+			</button>
+		)
+	}
+</div>
+
+<script is:inline>
+	(() => {
+		const stack = document.querySelector('[data-stack]');
+		const cards = stack ? [...stack.querySelectorAll('.card')] : [];
+		if (cards.length < 2) return;
+		const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+		const next = stack.querySelector('[data-next]');
+		next.hidden = false;
+		stack.dataset.ready = '';
+
+		const layout = () =>
+			cards.forEach((card, i) => {
+				card.dataset.pos = String(Math.min(i, 3));
+				card.style.zIndex = String(cards.length - i);
+			});
+
+		// Throw the top photo out to one side, then tuck it in at the back of the stack.
+		const cycle = (dir) => {
+			const top = cards[0];
+			top.style.transform = `translateX(${dir * 115}%) rotate(${dir * 14}deg)`;
+			const finish = () => {
+				top.style.transform = '';
+				cards.push(cards.shift());
+				layout();
+			};
+			if (reduce.matches) finish();
+			else setTimeout(finish, 200);
+		};
+
+		let startX = 0;
+		let dx = 0;
+		let dragging = false;
+		stack.addEventListener('pointerdown', (e) => {
+			if (e.button !== 0 || !cards[0].contains(e.target)) return;
+			dragging = true;
+			startX = e.clientX;
+			dx = 0;
+			cards[0].setPointerCapture(e.pointerId);
+			cards[0].classList.add('dragging');
+		});
+		stack.addEventListener('pointermove', (e) => {
+			if (!dragging) return;
+			dx = e.clientX - startX;
+			cards[0].style.transform = `translateX(${dx}px) rotate(${dx / 16}deg)`;
+		});
+		const release = () => {
+			if (!dragging) return;
+			dragging = false;
+			cards[0].classList.remove('dragging');
+			if (Math.abs(dx) > 50) cycle(Math.sign(dx));
+			else cards[0].style.transform = '';
+		};
+		stack.addEventListener('pointerup', release);
+		stack.addEventListener('pointercancel', release);
+		next.addEventListener('click', () => cycle(1));
+	})();
+</script>
+
+<style>
+	.stack {
+		position: relative;
+		justify-self: center;
+		width: 200px;
+		aspect-ratio: 4 / 5;
+		margin-block: var(--space-3);
+	}
+	.card {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		border-radius: var(--radius-m);
+		background: var(--bg-subtle);
+		box-shadow: var(--shadow);
+		touch-action: pan-y;
+		user-select: none;
+		-webkit-user-select: none;
+	}
+	.card img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		pointer-events: none;
+	}
+	.stack[data-ready] .card[data-pos='0'] {
+		cursor: grab;
+	}
+	.card.dragging {
+		cursor: grabbing !important;
+		transition: none !important;
+	}
+	/* The two photos right behind the top one peek out to the right and to the left. */
+	.card[data-pos='1'] {
+		transform: rotate(5deg) translate(9%, 2%);
+	}
+	.card[data-pos='2'] {
+		transform: rotate(-6deg) translate(-9%, 3%);
+	}
+	.card[data-pos='3'] {
+		transform: scale(0.96);
+	}
+	.card:not([data-pos='0']) img {
+		filter: brightness(0.92);
+	}
+
+	.next {
+		position: absolute;
+		left: 50%;
+		bottom: var(--space-3);
+		z-index: 99;
+		translate: -50% 0;
+		min-height: 36px;
+		padding: 0 var(--space-4);
+		border-radius: 999px;
+		color: var(--ink);
+		font: 500 0.8125rem / 1 var(--font-sans);
+		cursor: pointer;
+		opacity: 0;
+	}
+	/* The button is for keyboard users; it appears when focused. Mouse and touch users drag the photo. */
+	.next:focus-visible {
+		opacity: 1;
+	}
+
+	@media (min-width: 760px) {
+		.stack {
+			width: 240px;
+			margin-inline: var(--space-5);
+		}
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.card {
+			transition: transform 0.45s cubic-bezier(0.3, 1.25, 0.5, 1);
+		}
+		.card img {
+			transition: filter 0.3s ease;
+		}
+		.stack:hover .card[data-pos='1'] {
+			transform: rotate(7deg) translate(13%, 3%);
+		}
+		.stack:hover .card[data-pos='2'] {
+			transform: rotate(-8deg) translate(-13%, 4%);
+		}
+	}
+</style>
