@@ -1,0 +1,11 @@
+---
+import { getEntry, render } from 'astro:content';
+import Page from '../layouts/Page.astro';
+
+const about = (await getEntry('pages', 'about'))!;
+const { Content } = await render(about);
+---
+
+<Page title={`${about.data.title} | Adrian Marcu`} description={about.data.description}>
+	<Content />
+</Page>

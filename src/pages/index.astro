@@ -1,0 +1,52 @@
+---
+import PostList from '../components/PostList.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Page from '../layouts/Page.astro';
+import { getPosts } from '../lib/posts';
+
+const latest = (await getPosts()).slice(0, 4);
+---
+
+<Page title={SITE_TITLE} description={SITE_DESCRIPTION}>
+	<section class="intro">
+		<img src="/images/avatar-adrian.webp" alt="Adrian Marcu" width="120" height="120" />
+		<div>
+			<h1>Hi, I'm Adrian</h1>
+			<p>
+				Senior Fullstack Software Engineer with 10+ years building scalable products with Java,
+				Spring Boot, React and the cloud. I write about software architecture, freelancing,
+				building a SaaS and AI in development.
+			</p>
+			<p><a href="/about/">More about me</a> · <a href="/contact/">Work with me</a></p>
+		</div>
+	</section>
+
+	<h2>Latest posts</h2>
+	<PostList posts={latest} />
+	<p class="all"><a href="/posts/">All posts →</a></p>
+</Page>
+<style>
+	.intro {
+		display: flex;
+		gap: 1.5em;
+		align-items: center;
+		margin-bottom: 3em;
+	}
+	.intro img {
+		flex-shrink: 0;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+	.intro h1 {
+		margin: 0 0 0.25em;
+	}
+	.all {
+		margin-top: 2em;
+	}
+	@media (max-width: 720px) {
+		.intro {
+			flex-direction: column;
+			text-align: center;
+		}
+	}
+</style>

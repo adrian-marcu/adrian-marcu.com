@@ -1,0 +1,17 @@
+---
+import PostList from '../../components/PostList.astro';
+import Page from '../../layouts/Page.astro';
+import { getPosts } from '../../lib/posts';
+
+const posts = await getPosts();
+---
+
+<Page title="Posts | Adrian Marcu" description="All posts by Adrian Marcu.">
+	<h1>Posts</h1>
+	<PostList posts={posts} />
+</Page>
+<style>
+	h1 {
+		margin-top: 0;
+	}
+</style>
