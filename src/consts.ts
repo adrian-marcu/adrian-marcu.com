@@ -78,7 +78,6 @@ export const EDUCATION = [
 		degree: "Master's degree, Advanced Software Services",
 		school: 'University POLITEHNICA of Bucharest',
 		years: '2016 – 2018',
-		note: 'Grade: 10',
 	},
 	{
 		degree: 'Bachelor of Applied Science (B.A.Sc.), Computer Science',

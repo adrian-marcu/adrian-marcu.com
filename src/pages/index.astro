@@ -99,6 +99,18 @@ const person = {
 		gap: var(--space-7);
 		padding-block: var(--space-8) var(--space-8);
 	}
+	/* On phones the photos come first, on the left, as an introduction above the name. */
+	@media (max-width: 759px) {
+		.hero {
+			overflow-x: clip;
+			padding-top: var(--space-7);
+		}
+		.hero :global(.stack) {
+			order: -1;
+			justify-self: start;
+			margin-left: var(--space-3);
+		}
+	}
 	.role {
 		margin-top: var(--space-3);
 		color: var(--ink);
