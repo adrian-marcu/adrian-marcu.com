@@ -41,7 +41,7 @@ Read at least two existing posts in `src/content/blog/` before writing, and matc
 - The title is the page's H1, so the body starts with text (no `#` heading). Sections use `##`, sub-sections `###`.
 - Link to his related published posts where genuinely relevant, as `/<slug>/`.
 - Code blocks with a language tag when code helps; keep them short and correct.
-- No images unless provided.
+- Images: only ones Adrian provides (never invent, generate or link external images). See "Images" below.
 
 Post file: Markdown with frontmatter:
 
@@ -55,6 +55,21 @@ Body...
 ```
 
 `pubDate` and `linkedin` are added by the publishing scripts; don't add them.
+
+## Images
+
+When Adrian attaches images, they are files next to the post (e.g. `./img-1a2b3c4d.png`). Look at each one
+before using it.
+- **In the text:** `![Specific description of what the image shows](./img-1a2b3c4d.png)` on its own line,
+  where it supports the point being made. Refer to it naturally in the surrounding text ("In the diagram
+  below...") and make the text match what the image actually shows.
+- **As the cover** (shown at the top of the post and as the LinkedIn preview): add to the frontmatter
+  `cover: img-1a2b3c4d.png` and `coverAlt: "Specific description"`. Use it when Adrian asks, or when no
+  placement is given and the image works as a wide header (a photo or a clean illustration, not a
+  dense screenshot).
+- Every image needs a specific description (alt text): what it shows and why it matters, not "image" or
+  "screenshot". Don't claim anything about an image that you can't see in it.
+- Keep images Adrian placed himself where he put them unless he asks otherwise.
 
 ## LinkedIn post
 
