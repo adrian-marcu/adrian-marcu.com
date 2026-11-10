@@ -17,6 +17,8 @@ const blog = defineCollection({
 			heroImage: z.optional(image()),
 			heroAlt: z.string().optional(),
 			draft: z.boolean().default(false),
+			// The LinkedIn post shared when this post goes live (see the blog-ideas repo). Not shown on the site.
+			linkedin: z.string().optional(),
 		}),
 });
 

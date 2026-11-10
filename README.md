@@ -28,6 +28,14 @@ draft: true               # optional, hidden from production builds
 Posts with `draft: true` or a `pubDate` in the future are excluded from production builds (pages, lists,
 RSS, sitemap). A daily scheduled deploy publishes future-dated posts once their date passes.
 
+### Self-running blog
+
+New posts are drafted, scheduled and shared on LinkedIn automatically from the private
+[blog-ideas](https://github.com/adrian-marcu/blog-ideas) repo: each upcoming post is an issue there, and its
+publish workflow commits the post here at its scheduled time. The writing rules live in
+`.claude/skills/blog-post/SKILL.md` (also usable by hand in Claude Code: `/blog-post <idea>`). The optional
+`linkedin:` frontmatter field holds the LinkedIn text that was shared; it isn't shown on the site.
+
 ## Work, education and resume
 
 Each role from the resume is a file in `src/content/work/` (`order: 1` is the most recent), shown in the
