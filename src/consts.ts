@@ -65,11 +65,13 @@ export const EDUCATION = [
 	{
 		degree: "Master's degree, Advanced Software Services",
 		school: 'University POLITEHNICA of Bucharest',
+		url: 'https://upb.ro/en/faculties/the-faculty-of-automatic-control-and-computer-science/',
 		years: '2016 – 2018',
 	},
 	{
 		degree: 'Bachelor of Applied Science (B.A.Sc.), Computer Science',
 		school: 'University POLITEHNICA of Bucharest',
+		url: 'https://upb.ro/en/faculties/the-faculty-of-automatic-control-and-computer-science/',
 		years: '2012 – 2016',
 	},
 ];

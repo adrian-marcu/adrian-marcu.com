@@ -80,7 +80,11 @@ const companies = await getCompanies();
 					<li class="entry">
 						<Image class="logo" src={upbLogo} alt="University POLITEHNICA of Bucharest logo" width={52} height={52} densities={[1, 2]} />
 						<div class="body">
-							<h3 class="org">{e.school}</h3>
+							<h3 class="org">
+								<a href={e.url} target="_blank" rel="noopener">
+									{e.school}
+								</a>
+							</h3>
 							<p class="role-line">
 								<span class="title">{e.degree}</span>
 								<span class="dates">{e.years}</span>

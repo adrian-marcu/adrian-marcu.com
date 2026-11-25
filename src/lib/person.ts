@@ -17,7 +17,7 @@ export const person = {
 	image: new URL(photo.src, SITE_URL).href,
 	email: `mailto:${PROFILE.email}`,
 	address: { '@type': 'PostalAddress', addressLocality: 'Bucharest', addressCountry: 'RO' },
-	alumniOf: { '@type': 'CollegeOrUniversity', name: EDUCATION[0].school },
+	alumniOf: { '@type': 'CollegeOrUniversity', name: EDUCATION[0].school, url: EDUCATION[0].url },
 	knowsAbout: SKILLS.flatMap((group) => group.items),
 	sameAs: [SOCIAL_LINKS.linkedin, SOCIAL_LINKS.github],
 };
