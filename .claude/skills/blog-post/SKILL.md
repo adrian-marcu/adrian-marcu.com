@@ -32,6 +32,23 @@ itself; LinkedIn's search picks up these words and connects his profile with the
 - No made-up statistics, studies, benchmarks or quotes. Well-known, verifiable facts (e.g. Gall's law,
   what a tool does) are fine; when unsure, leave it out.
 - Never include a phone number, private client details, or anything marked confidential.
+
+## Never name employers or clients
+
+Don't name any company he works or worked at or for, or their clients and internal products (everything in
+`company` and `project` in `src/content/work/*.md`, and the names in `src/consts.ts`), in the post, the
+LinkedIn text, the title, the description or alt text. The work itself is fair game: describe the company
+instead, in a few words that give the useful context, and keep the story first person.
+- "At ING I built a search API..." → "At a large European bank I built a search API..."
+- "At A2X, an accounting product for e-commerce businesses..." → "At an accounting SaaS for e-commerce
+  businesses..."
+- "payments systems for Mastercard, NETS and Pay360" → "payments systems: real-time payments, an instant
+  payments clearing house and multi-channel payments"
+- "At METRO.digital" → "On my current project, a 25-microservice platform for a large retailer..."
+- Earlier jobs can also be placed in time: "Earlier in my career, at a software consultancy..."
+
+His own business, Evogile, may be named. This rule holds even when a source or a request names a company;
+the automation rejects drafts that name one.
 - No placeholders such as TODO or [insert ...]: the post must be publishable as is.
 
 ## Voice
