@@ -12,7 +12,7 @@ linkedin: >-
   should never touch.
 
 
-  At METRO.digital those services run on Google Cloud Run. I was the first
+  On my current project those services run on Google Cloud Run. I was the first
   engineer on the team to introduce agentic coding workflows there, using GitHub
   Copilot CLI. The model was rarely the problem. The agent simply didn't know
   what the team knew, and every repository had its own conventions.
@@ -40,7 +40,7 @@ Back in 2023 I wrote about trying out GitHub Copilot in [Redefining Development]
 
 The tools have come a long way since then. But that struggle has not completely gone away, and I think most engineers who tried an AI agent on a real codebase know the feeling. The agent writes code that compiles, looks reasonable, and is still wrong for *your* system. It uses the wrong test command, ignores a convention the whole team follows, or "fixes" something in a service it should never touch.
 
-At METRO.digital I work on a platform of 25 microservices running on Google Cloud Run. I was the first engineer on the team to introduce agentic coding workflows there, using GitHub Copilot CLI and **AGENTS.md files across all repositories**. The approach was adopted team-wide and made cross-service work noticeably faster. This post is about why that small file matters so much and what I think belongs in it.
+On my current project I work on a platform of 25 microservices running on Google Cloud Run. I was the first engineer on the team to introduce agentic coding workflows there, using GitHub Copilot CLI and **AGENTS.md files across all repositories**. The approach was adopted team-wide and made cross-service work noticeably faster. This post is about why that small file matters so much and what I think belongs in it.
 
 ## The problem is context, not the model
 

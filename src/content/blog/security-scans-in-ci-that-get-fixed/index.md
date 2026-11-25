@@ -11,7 +11,7 @@ linkedin: >-
   finds it.
 
 
-  At METRO.digital I drove the DevSecOps and software supply chain security work
+  On my current project I drove the DevSecOps and software supply chain security work
   across our frontend and backend services. We added Black Duck Polaris (SAST
   and SCA) to GitHub Actions on every merge into pre-production. The risk was
   ending up with a dashboard full of red that everybody learns to ignore. So new
@@ -41,7 +41,7 @@ Plenty of teams have some kind of security scanning in place. The harder questio
 
 Adding a scanner to a pipeline can take an afternoon. Getting a team to actually fix what it finds is a different job. Without that second part you end up with a dashboard full of red that everybody learns to ignore, and a false feeling that "security is handled".
 
-At METRO.digital I drove the DevSecOps and software supply chain security work across our frontend and backend services. We integrated Black Duck Polaris (SAST and SCA) into GitHub Actions on every pre-production merge, automated Jira ticket creation for new findings, and used AI-assisted remediation to resolve high and critical CVEs. The result was a **20% reduction in mean time to remediation**. Here is how I think about setting up something similar, and what I would pay attention to.
+On my current project I drove the DevSecOps and software supply chain security work across our frontend and backend services. We integrated Black Duck Polaris (SAST and SCA) into GitHub Actions on every pre-production merge, automated Jira ticket creation for new findings, and used AI-assisted remediation to resolve high and critical CVEs. The result was a **20% reduction in mean time to remediation**. Here is how I think about setting up something similar, and what I would pay attention to.
 
 ## First, know what you are scanning for
 

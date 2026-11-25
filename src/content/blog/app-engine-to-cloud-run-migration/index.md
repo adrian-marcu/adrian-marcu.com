@@ -11,7 +11,7 @@ linkedin: >-
   that simple.
 
 
-  At A2X I refactored a significant part of an application so it could move from
+  At an accounting SaaS I refactored a significant part of an application so it could move from
   Google App Engine to Cloud Run. Putting the app in a container was the easy
   part. The hard part was everything it relied on that only exists inside App
   Engine: Memcache for sessions, Task Queues, the old Datastore API and the App
@@ -41,7 +41,7 @@ linkedin: >-
 ---
 "Just put it in a container and deploy it to Cloud Run." That is how an App Engine to Cloud Run migration often sounds when someone first proposes it. Sounds simple right? Well, not quite.
 
-At A2X I worked on exactly this kind of migration: refactoring a significant part of an application that had grown up on Google App Engine so it could run on Google Cloud Run. Packaging an app in a container is the easy bit. The real work is everything the application quietly depends on that **only exists inside App Engine**.
+At an accounting SaaS for e-commerce businesses I worked on exactly this kind of migration: refactoring a significant part of an application that had grown up on Google App Engine so it could run on Google Cloud Run. Packaging an app in a container is the easy bit. The real work is everything the application quietly depends on that **only exists inside App Engine**.
 
 In the end it paid off: about 30% better performance and around 15% lower operational costs. But it wasn't one big switch. The work broke down into several separate migrations, and doing it as a series of small, boring, safe steps is the approach I'd recommend to anyone facing the same job.
 
@@ -57,13 +57,13 @@ So the first thing I would do on any migration like this is make a list of every
 
 Before replacing anything, I'd wrap each service in an interface that the business code depends on instead of the App Engine API. A cache interface, a task scheduler interface, a file store interface.
 
-This is the same idea as hexagonal architecture, which I used when building a search API at ING: the business logic talks to ports, and the infrastructure plugs in as adapters. Here it means you can swap Memcache for Redis without touching the code that uses the cache.
+This is the same idea as hexagonal architecture, which I used when building a search API at a large European bank: the business logic talks to ports, and the infrastructure plugs in as adapters. Here it means you can swap Memcache for Redis without touching the code that uses the cache.
 
 It also means you can do the migration **while still running on App Engine**. Every replacement can go to production and prove itself before you change where the app is hosted. That's the part that makes the whole thing low risk.
 
 ## Step 2: Replace the services one at a time
 
-These are the replacements we made at A2X, with what I'd watch out for in each.
+These are the replacements we made on that project, with what I'd watch out for in each.
 
 ### Memcache to Redis
 
