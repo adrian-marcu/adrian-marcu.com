@@ -17,7 +17,8 @@ export const PAGES = {
 	},
 	contact: {
 		title: 'Contact Adrian Marcu · Senior Fullstack Software Engineer',
-		description: 'Get in touch with Adrian Marcu: send a message, book an appointment or connect on LinkedIn.',
+		description:
+			'Get in touch with Adrian Marcu, Senior Fullstack Software Engineer in Bucharest, about contract roles or projects: send a message, book a call or connect on LinkedIn.',
 	},
 } as const;
 

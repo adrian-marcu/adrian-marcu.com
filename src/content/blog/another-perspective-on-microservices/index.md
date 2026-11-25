@@ -1,6 +1,6 @@
 ---
 title: "Another perspective on microservices architecture"
-description: "Discover the advantages and disadvantages of microservice architecture for your startup. Learn about the impact on scalability, resilience, speed of development, and cost. Compare the benefits of microservices with those of a monolithic architecture to make an informed decision for your business. Read our comprehensive guide now."
+description: "Microservices vs. a monolith for a startup: what microservices really buy you in scalability, resilience and development speed, and what they cost."
 pubDate: 2023-03-27T00:42:45+02:00
 heroImage: ./monomicro.webp
 ---

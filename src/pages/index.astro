@@ -1,31 +1,16 @@
 ---
-import avatar from '../assets/photos/portrait.png';
 import Background from '../components/Background.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import Icon from '../components/Icon.astro';
 import PhotoStack from '../components/PhotoStack.astro';
-import { EDUCATION, PROFILE, SITE_URL, SKILLS, SOCIAL_LINKS } from '../consts';
+import { PROFILE, SOCIAL_LINKS } from '../consts';
 import Base from '../layouts/Base.astro';
 import { PAGES } from '../lib/pages';
+import { person } from '../lib/person';
 import { getPosts, readingTime } from '../lib/posts';
 
 const recent = (await getPosts()).slice(0, 2);
 
-const person = {
-	'@context': 'https://schema.org',
-	'@type': 'Person',
-	'@id': `${SITE_URL}/#person`,
-	name: PROFILE.name,
-	jobTitle: PROFILE.jobTitle,
-	description: PROFILE.summary,
-	url: `${SITE_URL}/`,
-	image: new URL(avatar.src, SITE_URL).href,
-	email: `mailto:${PROFILE.email}`,
-	address: { '@type': 'PostalAddress', addressLocality: 'Bucharest', addressCountry: 'RO' },
-	alumniOf: { '@type': 'CollegeOrUniversity', name: EDUCATION[0].school },
-	knowsAbout: SKILLS.flatMap((group) => group.items),
-	sameAs: [SOCIAL_LINKS.linkedin, SOCIAL_LINKS.github],
-};
 ---
 
 <Base title={PAGES.home.title} description={PAGES.home.description} image="/og/home.png" type="profile" jsonLd={person}>

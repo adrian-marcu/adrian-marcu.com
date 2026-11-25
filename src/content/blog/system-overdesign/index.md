@@ -1,6 +1,6 @@
 ---
 title: "Pitfalls when overdesigning a system"
-description: "A blog about the pitfalls of overdesigning a system"
+description: "Why overdesigning a new system backfires, what Gall's law says about it, and how to start with a minimum viable solution that actually works."
 pubDate: 2023-03-12T14:16:53+02:00
 heroImage: ./complex-system.webp
 ---

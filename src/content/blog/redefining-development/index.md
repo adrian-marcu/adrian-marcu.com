@@ -1,6 +1,6 @@
 ---
-title: "Redefining Development: The Future of AI in the Hands of Developers"
-description: "Discover how AI is redefining software development and the benefits it offers to businesses and developers. From software design to automation and more productivity, learn about the symbiotic link between humans and AI and how it can give you a competitive edge. Read on to explore the future of AI in software development."
+title: "Redefining Development: AI in the Hands of Developers"
+description: "How AI is changing software design, development and testing, what it means for developers and businesses, and why the developers who adopt it gain an edge."
 pubDate: 2023-04-16T17:11:21+03:00
 heroImage: ./human-ai-symbiosis.jpg
 ---

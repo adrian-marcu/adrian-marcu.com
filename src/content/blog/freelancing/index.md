@@ -1,6 +1,6 @@
 ---
-title: "Freelancing Isn't as Scary as you Think"
-description: "A blog about becoming and staying a freelance software developer in today's freelancing market."
+title: "Freelancing Isn't as Scary as You Think"
+description: "What it takes to go from a corporate job to freelancing as a senior software developer, and how to keep finding good clients once you're there."
 pubDate: 2023-02-09T19:18:16+02:00
 heroImage: ./AdrianFreelancingBlog.webp
 ---

@@ -5,6 +5,7 @@ import Icon from '../components/Icon.astro';
 import { INTRO, PROFILE, SKILLS, SOCIAL_LINKS, WORKED_WITH } from '../consts';
 import Base from '../layouts/Base.astro';
 import { PAGES } from '../lib/pages';
+import { person } from '../lib/person';
 
 // From the previous About page, in Adrian's own words.
 const focus = [
@@ -16,9 +17,11 @@ const focus = [
 	'Strong communication and collaboration skills, able to work effectively with both technical and non-technical stakeholders',
 	'Quickly understanding complex systems and identifying opportunities for improvement',
 ];
+
+const profilePage = { '@context': 'https://schema.org', '@type': 'ProfilePage', mainEntity: person };
 ---
 
-<Base title={PAGES.about.title} description={PAGES.about.description} image="/og/about.png" type="profile">
+<Base title={PAGES.about.title} description={PAGES.about.description} image="/og/about.png" type="profile" jsonLd={profilePage}>
 	<header class="container intro">
 		<div>
 			<h1>About me</h1>

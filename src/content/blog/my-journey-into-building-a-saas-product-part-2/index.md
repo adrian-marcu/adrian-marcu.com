@@ -1,6 +1,6 @@
 ---
-title: "My Journey into Building a SaaS Product: A Wild Ride 2"
-description: "Join me on my SaaS-building adventure! From picking the perfect tech stack to mastering AWS, CI/CD pipelines, Terraform automation, and Stripe payments—this startup founder’s guide spills all the real-world lessons from my chaotic journey."
+title: "My Journey into Building a SaaS Product: A Wild Ride, Part 2"
+description: "Part 2 of building a SaaS from scratch: a backend developer takes on the frontend, then AWS, CI/CD, Terraform and Stripe payments. Messy parts included."
 pubDate: 2025-03-12T17:54:22+03:00
 heroImage: ./saas-development-backend-tech-overload-2025-wildride2.webp
 ---
