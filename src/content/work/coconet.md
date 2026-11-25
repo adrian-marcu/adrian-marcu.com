@@ -6,6 +6,7 @@ employment: Full-time
 location: Bucharest, Romania
 start: May 2019
 end: Jun 2020
+url: https://www.coconet.de/en/
 project: Multiversa – Digital Corporate Banking Platform
 highlights:
   - Implemented and integrated a new payment format into Multiversa using in-house frameworks

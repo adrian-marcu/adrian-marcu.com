@@ -6,6 +6,7 @@ employment: Full-time
 location: Bucharest, Romania
 start: Jul 2020
 end: Feb 2022
+url: https://inghubsromania.com/
 project: TouchPoint platform – Party and Agreement Search API, Integration Layer API
 highlights:
   - Designed and built a search engine API from scratch using hexagonal architecture and Elasticsearch, streamlining data deduplication and improving processing efficiency by 25% for large datasets

@@ -6,6 +6,7 @@ employment: Contract
 location: Remote
 start: Dec 2025
 end: Present
+url: https://metro.digital/
 highlights:
   - Led AI adoption as the first engineer to introduce agentic coding workflows on a 25-microservice GCP / Cloud Run platform, using GitHub Copilot CLI and AGENTS.md context engineering across all repositories, adopted team-wide and significantly accelerating cross-service development
   - Delivered end-to-end full-stack features across Java/Spring Boot microservices and React frontends, owning REST API design and third-party integrations from requirements through production, and partnering with product and business stakeholders to align API contracts
