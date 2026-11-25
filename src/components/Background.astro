@@ -1,27 +1,12 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection } from 'astro:content';
 import upbLogo from '../assets/logos/upb.jpg';
 import { EDUCATION } from '../consts';
+import { getCompanies, monogram } from '../lib/work';
 
 // Work and Education as tabs. Without JavaScript both panels simply show one after the other.
-
-const roles = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
-
-// Consecutive roles at the same company are shown under one entry (e.g. the two ING positions).
-type Role = (typeof roles)[number]['data'];
-const companies: { company: string; url?: string; logo?: Role['logo']; roles: Role[] }[] = [];
-for (const { data } of roles) {
-	const last = companies.at(-1);
-	if (last?.company === data.company) last.roles.push(data);
-	else companies.push({ company: data.company, url: data.url, logo: data.logo, roles: [data] });
-}
-
-// A neutral monogram stands in for a logo: the short name if there is one ("ING", "A2X"), else the initial.
-const monogram = (name: string) => {
-	const first = name.split(/[\s.]/)[0];
-	return first.length <= 3 ? first.toUpperCase() : first[0].toUpperCase();
-};
+// Each company entry has an id so the About page can link straight to it (/#work-endava).
+const companies = await getCompanies();
 ---
 
 <div class="background" data-tabs>
@@ -36,8 +21,8 @@ const monogram = (name: string) => {
 		<h2 class="sr-only">Work</h2>
 		<ol class="timeline" role="list">
 			{
-				companies.map(({ company, url, logo, roles }) => (
-					<li class="entry">
+				companies.map(({ id, company, url, logo, roles }) => (
+					<li class="entry" id={id}>
 						{logo ? (
 							<Image class="logo" src={logo} alt={`${company} logo`} width={52} height={52} densities={[1, 2]} />
 						) : (
@@ -226,6 +211,14 @@ const monogram = (name: string) => {
 		position: relative;
 		display: grid;
 		grid-template-columns: calc(var(--space-5) * 2 + 52px) 1fr;
+	}
+	/* Clear the floating header when arriving from a link, and briefly mark the entry that was linked to. */
+	.entry {
+		scroll-margin-top: 6rem;
+	}
+	.entry:target .org,
+	.entry:target .org a {
+		color: var(--accent);
 	}
 	.entry + .entry {
 		margin-top: var(--space-6);

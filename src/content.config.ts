@@ -37,6 +37,8 @@ const work = defineCollection({
 			end: z.string(),
 			url: z.url().optional(),
 			project: z.string().optional(),
+			// Clients served in this role, listed under the company on the About page.
+			clients: z.array(z.string()).default([]),
 			intro: z.string().optional(),
 			highlights: z.array(z.string()).default([]),
 			skills: z.array(z.string()).default([]),

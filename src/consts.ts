@@ -27,18 +27,6 @@ export const SOCIAL_LINKS = {
 		'https://calendar.google.com/calendar/appointments/schedules/AcZssZ2ZGN-5lZU8L0Mff1MyHqT7sv4M6jFdlRtvAXAdFQUXJXJDH7A2m1rsNRIX6m1N4DFbVzk6UuUl?gv=true',
 };
 
-// Companies and clients named in the resume, in reverse-chronological order.
-export const WORKED_WITH = [
-	'METRO.digital',
-	'A2X',
-	'ING',
-	'Mastercard',
-	'NETS',
-	'Credit Suisse',
-	'Pay360',
-	'Endava',
-];
-
 export const SKILLS = [
 	{
 		group: 'Top skills',

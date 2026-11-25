@@ -2,10 +2,13 @@
 import { Image } from 'astro:assets';
 import avatar from '../assets/photos/portrait.png';
 import Icon from '../components/Icon.astro';
-import { INTRO, PROFILE, SKILLS, SOCIAL_LINKS, WORKED_WITH } from '../consts';
+import { INTRO, PROFILE, SKILLS, SOCIAL_LINKS } from '../consts';
 import Base from '../layouts/Base.astro';
 import { PAGES } from '../lib/pages';
 import { person } from '../lib/person';
+import { getCompanies, monogram, span } from '../lib/work';
+
+const companies = await getCompanies();
 
 // From the previous About page, in Adrian's own words.
 const focus = [
@@ -71,10 +74,30 @@ const profilePage = { '@context': 'https://schema.org', '@type': 'ProfilePage', 
 		<section aria-labelledby="clients-heading">
 			<h2 id="clients-heading" class="rule-label">Companies and clients</h2>
 			<ul class="clients" role="list">
-				{WORKED_WITH.map((name) => <li>{name}</li>)}
+				{
+					companies.map((c) => (
+						<li>
+							<a class="client" href={`/#${c.id}`}>
+								{c.logo ? (
+									<Image class="client-logo" src={c.logo} alt="" width={44} height={44} densities={[1, 2]} />
+								) : (
+									<span class="client-logo" aria-hidden="true">
+										{monogram(c.company)}
+									</span>
+								)}
+								<span class="client-text">
+									<span class="client-name">{c.company}</span>
+									<span class="client-dates">{span(c)}</span>
+									{c.clients.length > 0 && <span class="client-for">Clients: {c.clients.join(', ')}</span>}
+								</span>
+								<Icon name="arrow" />
+							</a>
+						</li>
+					))
+				}
 			</ul>
 			<p class="more">
-				Full work history and education are on the <a class="text-link" href="/">home page</a>.
+				Each one links to its entry in the <a class="text-link" href="/#panel-work">work history</a> on the home page.
 			</p>
 		</section>
 	</div>
@@ -152,20 +175,83 @@ const profilePage = { '@context': 'https://schema.org', '@type': 'ProfilePage', 
 	.skills dd {
 		margin: 0;
 	}
+	/* Logo cards that link to each company's entry in the home page's Work timeline. */
 	.clients {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-2);
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+		gap: var(--space-3);
 		margin: 0;
 		padding: 0;
 		list-style: none;
 	}
-	.clients li {
-		padding: var(--space-1) var(--space-3);
+	.client {
+		display: flex;
+		align-items: center;
+		gap: var(--space-4);
+		height: 100%;
+		padding: var(--space-4);
 		border: 1px solid var(--border);
-		border-radius: 999px;
+		border-radius: var(--radius-l);
+		background: var(--surface);
 		color: var(--ink);
-		font-weight: 500;
+		text-decoration: none;
+	}
+	.client:hover {
+		border-color: var(--border-strong);
+	}
+	.client:hover .client-name {
+		text-decoration: underline;
+		text-decoration-thickness: 1px;
+	}
+	.client-logo {
+		flex: none;
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border: 1px solid var(--border-strong);
+		border-radius: 50%;
+		background: #ffffff;
+		object-fit: cover;
+		color: #0b1120;
+		font-family: var(--font-serif);
+		font-size: 0.875rem;
+		font-weight: 700;
+	}
+	.client-text {
+		display: grid;
+		flex: 1;
+		min-width: 0;
+	}
+	.client-name {
+		font-weight: 600;
+		line-height: 1.35;
+	}
+	.client-dates,
+	.client-for {
+		color: var(--muted);
+		font-size: 0.875rem;
+		font-variant-numeric: tabular-nums;
+	}
+	.client-for {
+		margin-top: var(--space-1);
+	}
+	.client :global(svg) {
+		flex: none;
+		width: 1.1em;
+		height: 1.1em;
+		color: var(--muted);
+	}
+	@media (prefers-reduced-motion: no-preference) {
+		.client {
+			transition: border-color 0.2s ease;
+		}
+		.client :global(svg) {
+			transition: transform 0.2s ease;
+		}
+		.client:hover :global(svg) {
+			transform: translateX(3px);
+		}
 	}
 	.more {
 		margin-top: var(--space-5);
