@@ -121,6 +121,17 @@ const companies = await getCompanies();
 		list.hidden = false;
 		root.classList.add('is-tabs');
 		select(0);
+
+		// Arriving from a company card on the About page (/#work-endava): scroll to that company and
+		// highlight it for half a second. Only those cards link here with a #work- hash.
+		const target = location.hash.startsWith('#work-') && document.getElementById(location.hash.slice(1));
+		if (target) {
+			requestAnimationFrame(() => {
+				target.scrollIntoView({ block: 'start' });
+				target.classList.add('flash');
+				target.addEventListener('animationend', () => target.classList.remove('flash'), { once: true });
+			});
+		}
 	})();
 </script>
 
@@ -212,13 +223,32 @@ const companies = await getCompanies();
 		display: grid;
 		grid-template-columns: calc(var(--space-5) * 2 + 52px) 1fr;
 	}
-	/* Clear the floating header when arriving from a link, and briefly mark the entry that was linked to. */
+	/* Clear the floating header when arriving from a link on the About page. */
 	.entry {
 		scroll-margin-top: 6rem;
 	}
-	.entry:target .org,
-	.entry:target .org a {
-		color: var(--accent);
+	/* The entry linked to from the About page lights up for a moment, then fades back to normal. */
+	.entry.flash {
+		isolation: isolate;
+	}
+	.entry.flash::after {
+		content: '';
+		position: absolute;
+		inset: calc(-1 * var(--space-3)) 0 calc(-1 * var(--space-3)) calc(var(--space-5) - var(--space-3));
+		z-index: -1;
+		border-radius: var(--radius-l);
+		background: color-mix(in srgb, var(--accent) 14%, transparent);
+		box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent);
+		animation: flash 0.9s ease-out forwards;
+	}
+	@keyframes flash {
+		0%,
+		55% {
+			opacity: 1;
+		}
+		100% {
+			opacity: 0;
+		}
 	}
 	.entry + .entry {
 		margin-top: var(--space-6);
