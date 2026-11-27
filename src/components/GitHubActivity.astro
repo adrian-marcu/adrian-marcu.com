@@ -5,10 +5,17 @@ import { getContributions } from '../lib/github';
 // The past year of GitHub contributions as a heatmap, drawn at build time in the site's own colours.
 const data = await getContributions();
 
-const fmt = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' });
 const monthFmt = new Intl.DateTimeFormat('en-US', { month: 'short', timeZone: 'UTC' });
-const label = (d: { date: string; count: number }) =>
-	`${d.count === 0 ? 'No' : d.count} contribution${d.count === 1 ? '' : 's'} on ${fmt.format(new Date(`${d.date}T00:00:00Z`))}`;
+const longMonth = new Intl.DateTimeFormat('en-US', { month: 'long', timeZone: 'UTC' });
+const ordinal = (n: number) => {
+	const suffix = n % 100 >= 11 && n % 100 <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' } as Record<number, string>)[n % 10] ?? 'th';
+	return `${n}${suffix}`;
+};
+// Worded as on GitHub: "4 contributions on September 2nd."
+const label = (d: { date: string; count: number }) => {
+	const date = new Date(`${d.date}T00:00:00Z`);
+	return `${d.count === 0 ? 'No' : d.count} contribution${d.count === 1 ? '' : 's'} on ${longMonth.format(date)} ${ordinal(date.getUTCDate())}.`;
+};
 
 // A month name above each week where a new month begins (not the first column, which is usually a partial month).
 const months = (data?.weeks ?? []).flatMap((week, i) => {
@@ -47,12 +54,13 @@ const months = (data?.weeks ?? []).flatMap((week, i) => {
 									class="day"
 									data-level={d.level}
 									style={`grid-column: ${i + 1}; grid-row: ${new Date(`${d.date}T00:00:00Z`).getUTCDay() + 2}`}
-									title={label(d)}
+									data-label={label(d)}
 								/>
 							)),
 						)}
 					</div>
 				</div>
+				<div class="tip" role="tooltip" hidden />
 				<div class="foot">
 					<a class="text-link" href={SOCIAL_LINKS.github} target="_blank" rel="noopener">
 						View on GitHub
@@ -70,13 +78,43 @@ const months = (data?.weeks ?? []).flatMap((week, i) => {
 	)
 }
 
-<!-- Narrow screens show the most recent weeks: start the scroller at its right edge. -->
+<!-- Narrow screens show the most recent weeks: start the scroller at its right edge. Hovering (or tapping) a
+     square shows its count in a bubble above it, as on GitHub. -->
 <script is:inline>
-	document.querySelectorAll('.github .scroller').forEach((el) => (el.scrollLeft = el.scrollWidth));
+	document.querySelectorAll('.github .card').forEach((card) => {
+		const scroller = card.querySelector('.scroller');
+		const grid = card.querySelector('.grid');
+		const tip = card.querySelector('.tip');
+		scroller.scrollLeft = scroller.scrollWidth;
+
+		const show = (day) => {
+			tip.textContent = day.dataset.label;
+			tip.hidden = false;
+			const c = card.getBoundingClientRect();
+			const d = day.getBoundingClientRect();
+			const w = tip.offsetWidth;
+			const center = d.left - c.left + d.width / 2;
+			const left = Math.min(Math.max(center - w / 2, 4), c.width - w - 4);
+			tip.style.left = `${left}px`;
+			tip.style.top = `${d.top - c.top - tip.offsetHeight - 8}px`;
+			tip.style.setProperty('--arrow', `${center - left}px`);
+		};
+		const hide = () => (tip.hidden = true);
+		grid.addEventListener('pointerover', (e) => {
+			const day = e.target.closest('.day');
+			if (day) show(day);
+		});
+		grid.addEventListener('pointerleave', hide);
+		scroller.addEventListener('scroll', hide, { passive: true });
+		document.addEventListener('pointerdown', (e) => {
+			if (!grid.contains(e.target)) hide();
+		});
+	});
 </script>
 
 <style>
 	.card {
+		position: relative;
 		padding: var(--space-5);
 		border: 1px solid var(--border);
 		border-radius: var(--radius-l);
@@ -126,6 +164,40 @@ const months = (data?.weeks ?? []).flatMap((week, i) => {
 	}
 	.day[data-level='4'] {
 		background: var(--accent);
+	}
+	/* GitHub-style bubble with a small arrow pointing at the square. */
+	.tip {
+		position: absolute;
+		z-index: 2;
+		padding: 0.35rem 0.6rem;
+		border-radius: var(--radius-s);
+		background: var(--ink);
+		color: var(--surface);
+		font-size: 0.75rem;
+		font-weight: 500;
+		line-height: 1.3;
+		white-space: nowrap;
+		pointer-events: none;
+		box-shadow: 0 4px 12px rgb(0 0 0 / 0.18);
+	}
+	.tip[hidden] {
+		display: none;
+	}
+	.tip::after {
+		content: '';
+		position: absolute;
+		top: 100%;
+		left: var(--arrow, 50%);
+		border: 5px solid transparent;
+		border-top-color: var(--ink);
+		transform: translateX(-50%);
+	}
+	.day:hover {
+		outline: 1px solid var(--ink);
+		outline-offset: -1px;
+	}
+	.legend .day:hover {
+		outline: none;
 	}
 	.foot {
 		display: flex;

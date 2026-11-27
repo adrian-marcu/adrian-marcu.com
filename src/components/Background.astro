@@ -23,7 +23,12 @@ const companies = await getCompanies();
 			{
 				companies.map(({ id, company, url, logo, roles }) => (
 					<li class="entry" id={id}>
-						{logo ? (
+						{logo && url ? (
+							// The logo links to the company too; it's a duplicate of the name link, so it's skipped by keyboard and screen readers.
+							<a class="logo-link" href={url} target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+								<Image class="logo" src={logo} alt="" width={52} height={52} densities={[1, 2]} />
+							</a>
+						) : logo ? (
 							<Image class="logo" src={logo} alt={`${company} logo`} width={52} height={52} densities={[1, 2]} />
 						) : (
 							<span class="logo" aria-hidden="true">
@@ -273,6 +278,17 @@ const companies = await getCompanies();
 		font-size: 0.9375rem;
 		font-weight: 700;
 		letter-spacing: 0.02em;
+	}
+	.logo-link {
+		align-self: start;
+		width: fit-content;
+		border-radius: 50%;
+	}
+	.logo-link .logo {
+		transition: border-color 0.2s ease;
+	}
+	.logo-link:hover .logo {
+		border-color: var(--accent);
 	}
 	.body {
 		min-width: 0;
