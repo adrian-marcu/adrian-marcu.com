@@ -11,7 +11,17 @@ export const person = {
 	'@type': 'Person',
 	'@id': `${SITE_URL}/#person`,
 	name: PROFILE.name,
+	// Full name with the middle name, as on GitHub and official documents, so both resolve to the same person.
+	alternateName: ['Constantin-Adrian Marcu', 'Constantin Adrian Marcu'],
+	givenName: 'Adrian',
+	additionalName: 'Constantin',
+	familyName: 'Marcu',
 	jobTitle: PROFILE.jobTitle,
+	// Current roles; the timeline on the home page has the full history.
+	worksFor: [
+		{ '@type': 'Organization', name: 'METRO.digital', url: 'https://metro.digital/' },
+		{ '@type': 'Organization', name: 'Evogile', url: 'https://evogile.com', founder: { '@id': `${SITE_URL}/#person` } },
+	],
 	description: PROFILE.summary,
 	url: `${SITE_URL}/`,
 	image: new URL(photo.src, SITE_URL).href,
