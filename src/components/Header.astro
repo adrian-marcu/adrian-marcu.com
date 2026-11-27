@@ -16,7 +16,6 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 <header class="site-header">
 	<div class="pill glass">
 		<nav aria-label="Main">
-			<span class="thumb" aria-hidden="true"></span>
 			<ul>
 				{
 					links.map(({ href, label }) => (
@@ -38,50 +37,6 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 </header>
 
 <script is:inline>
-	(() => {
-		// A glass bubble marks the current page. It follows the pointer over the links and springs back
-		// on leave; after clicking a link it slides over from the previous page's position on the next page.
-		const nav = document.querySelector('.site-header nav');
-		const thumb = nav?.querySelector('.thumb');
-		if (!thumb) return;
-		const links = [...nav.querySelectorAll('a')];
-		const current = links.find((a) => a.getAttribute('aria-current') === 'page');
-		const place = (a) => {
-			if (!a) return (thumb.style.opacity = '0');
-			thumb.style.opacity = '1';
-			thumb.style.transform = `translateX(${a.offsetLeft}px)`;
-			thumb.style.width = `${a.offsetWidth}px`;
-		};
-		let from = null;
-		try {
-			from = JSON.parse(sessionStorage.getItem('nav-thumb') || 'null');
-			sessionStorage.removeItem('nav-thumb');
-		} catch {}
-		if (from && current) {
-			thumb.style.transform = `translateX(${from.x}px)`;
-			thumb.style.width = `${from.w}px`;
-			thumb.style.opacity = '1';
-		} else {
-			place(current);
-		}
-		nav.classList.add('has-thumb');
-		requestAnimationFrame(() =>
-			requestAnimationFrame(() => {
-				nav.classList.add('animate');
-				place(current);
-			}),
-		);
-		links.forEach((a) => a.addEventListener('pointerenter', () => place(a)));
-		nav.addEventListener('pointerleave', () => place(current));
-		nav.addEventListener('click', (e) => {
-			const start = current || e.target.closest('a');
-			if (!start) return;
-			try {
-				sessionStorage.setItem('nav-thumb', JSON.stringify({ x: start.offsetLeft, w: start.offsetWidth }));
-			} catch {}
-		});
-	})();
-
 	document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
 		const root = document.documentElement;
 		const dark = root.dataset.theme
@@ -131,33 +86,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 		border-radius: 999px;
 		pointer-events: auto;
 	}
-	nav {
-		position: relative;
-	}
-	/* The sliding bubble behind the current (or hovered) link, with a soft spring like iOS. */
-	.thumb {
-		position: absolute;
-		top: 0;
-		left: 0;
-		height: 100%;
-		border-radius: 999px;
-		background: var(--glass-active);
-		box-shadow:
-			inset 0 1px 0 var(--glass-highlight),
-			inset 0 0 0 1px var(--glass-border);
-		opacity: 0;
-		pointer-events: none;
-	}
-	@media (prefers-reduced-motion: no-preference) {
-		.animate .thumb {
-			transition:
-				transform 0.45s cubic-bezier(0.3, 1.35, 0.5, 1),
-				width 0.45s cubic-bezier(0.3, 1.35, 0.5, 1),
-				opacity 0.2s ease;
-		}
-	}
 	nav ul {
-		position: relative;
 		display: flex;
 		gap: 2px;
 		margin: 0;
@@ -181,9 +110,6 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 	}
 	nav a[aria-current='page'] {
 		color: var(--ink);
-	}
-	/* Without JavaScript there's no bubble, so the current link gets its own background. */
-	nav:not(.has-thumb) a[aria-current='page'] {
 		background: var(--glass-active);
 	}
 	.divider {
