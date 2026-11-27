@@ -29,8 +29,6 @@
 	--glass-filter: blur(14px) saturate(190%) brightness(1.06);
 	--glass-rim: rgb(255 255 255 / 0.95);
 	--glass-glow: rgb(255 255 255 / 0.35);
-	--glass-bg-lens: rgb(255 255 255 / 0.3);
-	--glass-sheen: rgb(255 255 255 / 0.55);
 	--glass-border: rgb(15 23 42 / 0.09);
 	--glass-highlight: rgb(255 255 255 / 0.85);
 	--glass-shadow: 0 10px 30px -10px rgb(15 23 42 / 0.22);
@@ -93,10 +91,6 @@
 		--glass-filter: blur(14px) saturate(170%) brightness(0.96);
 		--glass-rim: rgb(255 255 255 / 0.3);
 		--glass-glow: rgb(255 255 255 / 0.05);
-	--glass-bg-lens: rgb(17 24 39 / 0.32);
-	--glass-sheen: rgb(255 255 255 / 0.12);
-		--glass-bg-lens: rgb(17 24 39 / 0.32);
-		--glass-sheen: rgb(255 255 255 / 0.12);
 		--glass-border: rgb(255 255 255 / 0.1);
 		--glass-highlight: rgb(255 255 255 / 0.09);
 		--glass-shadow: 0 10px 30px -10px rgb(0 0 0 / 0.7);
@@ -327,16 +321,11 @@ hr {
 .glass {
 	position: relative;
 	border: 1px solid var(--glass-border);
-	/* A soft sheen across the top half, like light falling on a curved glass surface. */
-	background:
-		linear-gradient(to bottom, var(--glass-sheen), transparent 55%) padding-box,
-		var(--glass-bg) padding-box;
+	background: var(--glass-bg);
 	-webkit-backdrop-filter: var(--glass-filter);
 	backdrop-filter: var(--glass-filter);
-	/* Specular edges: bright top-left, fainter bottom-right, plus a thin inner glow. */
 	box-shadow:
-		inset 1.5px 1.5px 1px -0.5px var(--glass-rim),
-		inset -1px -1px 1px -0.5px color-mix(in srgb, var(--glass-rim) 55%, transparent),
+		inset 0 1px 0 var(--glass-highlight),
 		inset 0 0 14px var(--glass-glow),
 		var(--glass-shadow);
 }

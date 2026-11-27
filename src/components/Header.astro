@@ -37,51 +37,7 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 	</div>
 </header>
 
-<!-- Liquid-glass refraction for the pill (Chromium only, sized by the script below). -->
-<svg class="lens-defs" aria-hidden="true" focusable="false">
-	<filter id="liquid-glass" filterUnits="userSpaceOnUse" primitiveUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-		<feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur" />
-		<feImage result="map" preserveAspectRatio="none" />
-		<feDisplacementMap in="blur" in2="map" scale="36" xChannelSelector="R" yChannelSelector="G" result="bent" />
-		<feColorMatrix in="bent" type="saturate" values="1.7" />
-	</filter>
-</svg>
-
 <script is:inline>
-	// Liquid glass: in Chromium the pill bends what's behind it at its edges, like a thick lens.
-	// The displacement map is drawn to the pill's exact size so the bending band stays the same width.
-	(() => {
-		const pill = document.querySelector('.site-header .pill');
-		const filter = document.getElementById('liquid-glass');
-		if (!pill || !filter || !navigator.userAgentData?.brands?.some((b) => b.brand === 'Chromium')) return;
-		const image = filter.querySelector('feImage');
-		const draw = () => {
-			const w = pill.offsetWidth;
-			const h = pill.offsetHeight;
-			const e = Math.round(h * 0.32); // width of the bending band at the edge
-			const map = `<svg xmlns='http://www.w3.org/2000/svg' width='${w}' height='${h}'>
-				<defs>
-					<linearGradient id='r'><stop offset='0' stop-color='#000'/><stop offset='1' stop-color='#f00'/></linearGradient>
-					<linearGradient id='g' x2='0' y2='1'><stop offset='0' stop-color='#000'/><stop offset='1' stop-color='#0f0'/></linearGradient>
-					<filter id='b' x='-20%' y='-50%' width='140%' height='200%'><feGaussianBlur stdDeviation='${e / 2.2}'/></filter>
-				</defs>
-				<rect width='${w}' height='${h}' fill='url(#r)'/>
-				<rect width='${w}' height='${h}' fill='url(#g)' style='mix-blend-mode:screen'/>
-				<rect x='${e}' y='${e}' width='${w - 2 * e}' height='${h - 2 * e}' rx='${(h - 2 * e) / 2}' fill='#808000' filter='url(#b)'/>
-			</svg>`;
-			for (const el of [filter, image]) {
-				el.setAttribute('x', '0');
-				el.setAttribute('y', '0');
-				el.setAttribute('width', String(w));
-				el.setAttribute('height', String(h));
-			}
-			image.setAttribute('href', `data:image/svg+xml,${encodeURIComponent(map)}`);
-		};
-		draw();
-		new ResizeObserver(draw).observe(pill);
-		pill.classList.add('lens');
-	})();
-
 	(() => {
 		// A glass bubble marks the current page. It follows the pointer over the links and springs back
 		// on leave; after clicking a link it slides over from the previous page's position on the next page.
@@ -199,17 +155,6 @@ const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWi
 				width 0.45s cubic-bezier(0.3, 1.35, 0.5, 1),
 				opacity 0.2s ease;
 		}
-	}
-	/* Chromium: blur, bending and colour boost all come from the SVG filter (CSS blur() can't be combined with it). */
-	.pill.lens {
-		--glass-bg: var(--glass-bg-lens);
-		backdrop-filter: url(#liquid-glass);
-	}
-	.lens-defs {
-		position: absolute;
-		width: 0;
-		height: 0;
-		overflow: hidden;
 	}
 	nav ul {
 		position: relative;
