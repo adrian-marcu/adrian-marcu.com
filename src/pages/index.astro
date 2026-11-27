@@ -1,6 +1,7 @@
 ---
 import Background from '../components/Background.astro';
 import FormattedDate from '../components/FormattedDate.astro';
+import GitHubActivity from '../components/GitHubActivity.astro';
 import Icon from '../components/Icon.astro';
 import PhotoStack from '../components/PhotoStack.astro';
 import { PROFILE, SOCIAL_LINKS } from '../consts';
@@ -45,6 +46,10 @@ const recent = (await getPosts()).slice(0, 2);
 	<section class="container" aria-label="Work and education">
 		<Background />
 	</section>
+
+	<div class="container activity">
+		<GitHubActivity />
+	</div>
 
 	<section class="container recent" aria-labelledby="recent-heading">
 		<div class="recent-head">
@@ -204,6 +209,9 @@ const recent = (await getPosts()).slice(0, 2);
 		}
 	}
 
+	.activity {
+		margin-top: var(--space-9);
+	}
 	.recent {
 		margin-top: var(--space-9);
 	}
